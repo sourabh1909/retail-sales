@@ -10,7 +10,6 @@ load_dotenv()  # loads .env file from project root
 import requests as http_requests
 
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -26,29 +25,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── Material Icons ────────────────────────────────────────────────────────────
-components.html("""
-<script>
-(function fixStreamlitIcons() {
-    function injectFont() {
-        const parent = window.parent.document;
-        if (!parent.querySelector('link[href*="Material+Icons"]')) {
-            ['Material+Icons', 'Material+Icons+Round', 'Material+Icons+Outlined'].forEach(family => {
-                const link = parent.createElement('link');
-                link.rel  = 'stylesheet';
-                link.href = `https://fonts.googleapis.com/icon?family=${family}`;
-                parent.head.appendChild(link);
-            });
-        }
-    }
-    injectFont();
-    new MutationObserver(injectFont).observe(
-        window.parent.document.body,
-        { childList: true, subtree: true }
-    );
-})();
-</script>
-""", height=0)
+# Material Icons loaded via CSS @import below
 
 # ─── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -132,8 +109,24 @@ st.markdown("""
     [data-testid="collapsedControl"],
     [data-testid="collapsedControl"] *,
     section[data-testid="stSidebarCollapsedControl"],
+    [data-testid="stSidebarCollapsedControl"],
     button[aria-label="Close sidebar"],
-    button[aria-label="Open sidebar"] { display: none !important; visibility: hidden !important; }
+    button[aria-label="Open sidebar"],
+    button[kind="header"],
+    .st-emotion-cache-pb6fr7,
+    [data-testid="baseButton-header"] { display: none !important; visibility: hidden !important; }
+
+    /* Fix Material Icon text showing as raw strings */
+    .material-icons, .material-icons-round, .material-icons-outlined {
+        font-family: "Material Icons" !important;
+        font-size: 20px !important;
+        line-height: 1 !important;
+        display: inline-block !important;
+    }
+
+    /* Hide sidebar toggle arrow button completely */
+    [data-testid="stSidebarNav"] ~ div button { display: none !important; }
+    section[tabindex="0"] > div:first-child > div:first-child > button { display: none !important; }
     h1,h2,h3,h4 { color: #e0e4f7 !important; }
     .stDataFrame { border-radius: 10px; overflow: hidden; }
     .status-ok  { color: #4ade80; font-weight: 600; }
@@ -977,7 +970,7 @@ with tabs[7]:
             st.session_state.pending_message = user_input.strip()
             st.rerun()
 
-        with st.expander("🔍 Session info"):
+        with st.expander("Session info"):
             st.code(f"Messages : {len(st.session_state.chat_history)}")
 
 
