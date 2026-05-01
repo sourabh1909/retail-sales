@@ -833,7 +833,7 @@ with tabs[5]:
             z=pivot.values,
             x=pivot.columns.tolist(),
             y=pivot.index.tolist(),
-            colorscale="Jet",
+            colorscale="Purples",
             hoverongaps=False,
             text=pivot.values,
             texttemplate="%{text:,.0f}",
