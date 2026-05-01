@@ -5,6 +5,8 @@
 #      GEMINI_API_KEY = "AIza..."
 
 import os
+from dotenv import load_dotenv
+load_dotenv()  # loads .env file from project root
 import requests as http_requests
 
 import streamlit as st
@@ -150,7 +152,10 @@ PLOTLY_BASE = dict(
     margin=dict(t=20, b=10, l=10, r=10),
 )
 
-GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY", ""))
+try:
+    GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY", ""))
+except Exception:
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -352,6 +357,7 @@ def get_deepdive(df, category=None, region=None):
     grp = (d.groupby(["Category","Region","Month_Name","Month"])
             .agg(sales=("Sales","sum"), profit=("Profit","sum"), transactions=("Sales","count"))
             .reset_index().sort_values(["Category","Region","Month"]).round(2))
+    grp = grp.drop(columns=["Month"])
     grp = grp.rename(columns={"Month_Name":"month","Category":"category","Region":"region"})
     return grp
 
