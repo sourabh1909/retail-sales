@@ -149,7 +149,7 @@ try:
     GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY", ""))
 except Exception:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # DATA LOADING & ANALYTICS  (previously backend/data_loader.py + main.py)
