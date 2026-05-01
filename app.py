@@ -833,7 +833,7 @@ with tabs[5]:
             z=pivot.values,
             x=pivot.columns.tolist(),
             y=pivot.index.tolist(),
-            colorscale="Purples",
+            colorscale="Jet",
             hoverongaps=False,
             text=pivot.values,
             texttemplate="%{text:,.0f}",
@@ -1013,7 +1013,7 @@ with tabs[8]:
                 return "color: #4ade80" if v > 0 else "color: #f87171"
             except:
                 return ""
-        st.dataframe(df_raw.style.applymap(color_profit, subset=["Profit"] if "Profit" in df_raw.columns else []),
+        st.dataframe(df_raw.style.map(color_profit, subset=["Profit"] if "Profit" in df_raw.columns else []),
                      use_container_width=True, height=420)
 
     c1, c2, c3 = st.columns([1, 1, 5])
