@@ -8,11 +8,7 @@ retail_app/
 ├── .gitignore
 ├── requirements.txt
 ├── retail_sales.csv
-├── backend/
-│   ├── main.py           ← FastAPI server (sessions, analytics, AI chat)
-│   └── data_loader.py    ← data cleaning & summary builder
-└── frontend/
-    └── app.py            ← Streamlit dashboard
+└── app.py            ← Streamlit dashboard
 ```
 
 ## Setup
@@ -26,28 +22,18 @@ pip install -r requirements.txt
 Edit `.env` and add your free Gemini API key:
 ```
 GEMINI_API_KEY="AIza..."
-BACKEND_HOST="127.0.0.1"
-BACKEND_PORT=8000
 DATA_PATH="retail_sales.csv"
 ```
 Get a free key at: https://aistudio.google.com/app/apikey
 
-### 3. Run the FastAPI backend
-Open a terminal in the `retail_app/` folder:
-```bash
-uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
-```
-
-### 4. Run the Streamlit frontend
+### 3. Run the Streamlit frontend
 Open a **second terminal** in the `retail_app/` folder:
 ```bash
 streamlit run frontend/app.py
 ```
 
-### 5. Open the app
-Visit: http://localhost:8501
-
----
+### 4. Open the app
+Visit : https://retail-data-plots.streamlit.app/
 
 ## API Endpoints (FastAPI)
 
@@ -65,7 +51,7 @@ Visit: http://localhost:8501
 | GET    | /analytics/monthly        | Monthly sales & profit       |
 | GET    | /analytics/raw            | Paginated raw data           |
 
-Interactive API docs: http://localhost:8000/docs
+Interactive API docs: https://retail-data-plots.streamlit.app/docs
 
 ---
 
